@@ -390,104 +390,117 @@ function TiltCard({ children, className = '', style = {} }) {
   )
 }
 
-// ── Hero — useScroll multi-layer parallax (Anton Skvortsov) ────────────────
+// ── Hero — full-screen video background ────────────────────────────────────
 function Hero() {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  // Multi-layer parallax: foreground, midground, background
-  const yFg  = useTransform(scrollYProgress, [0, 1], [0, -80])
-  const yMid = useTransform(scrollYProgress, [0, 1], [0, -45])
-  const yBg  = useTransform(scrollYProgress, [0, 1], [0, -20])
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
+  const opacity    = useTransform(scrollYProgress, [0, 0.55], [1, 0])
+  const yContent   = useTransform(scrollYProgress, [0, 1], [0, -100])
+  const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.08])
 
   return (
-    <section ref={ref} id="hero" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden', padding: '8rem 2.5rem 5rem' }}>
-      {/* BG orb — background layer */}
-      <motion.div style={{ y: yBg }} className="orb" style2={{ position: 'absolute', width: '700px', height: '700px', background: 'radial-gradient(circle,rgba(200,134,10,0.09) 0%,transparent 70%)', top: '-15%', right: '-8%', borderRadius: '50%', filter: 'blur(80px)', pointerEvents: 'none', position: 'absolute' }} />
+    <section ref={ref} id="hero" style={{ position: 'relative', height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
-      <div style={{ maxWidth: '1300px', margin: '0 auto', width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center', position: 'relative', zIndex: 1 }}>
-        {/* Copy — foreground layer */}
-        <motion.div style={{ y: yFg }}>
-          <motion.p className="section-label"
-            custom={0} variants={fadeUp} initial="hidden" animate="visible"
-            style={{ marginBottom: '1rem' }}
-          >Des Moines, Iowa · Est. 2005</motion.p>
+      {/* ── Video background (cover-fit, slow zoom on scroll) ── */}
+      <motion.video
+        src="/assets/hero.mp4"
+        autoPlay loop muted playsInline
+        style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover',
+          scale: videoScale,
+          transformOrigin: 'center center',
+        }}
+      />
 
-          {/* Space Grotesk bold heading — TDS / Marcelo style, editorial italic in Cormorant */}
-          <motion.h1
-            custom={1} variants={fadeUp} initial="hidden" animate="visible"
-            style={{ fontFamily: '"Space Grotesk",system-ui', fontSize: 'clamp(3rem,6vw,6.5rem)', fontWeight: 700, lineHeight: 1.0, letterSpacing: '-0.01em', color: '#fff', marginBottom: '1.5rem' }}
-          >
-            AT THE<br />
-            <span style={{ fontFamily: '"Cormorant Garamond",serif', fontStyle: 'italic', fontWeight: 300, fontSize: '1.1em', color: '#C8860A' }}>Peak</span>
-            <br />OF CRAFT.
-          </motion.h1>
+      {/* ── Multi-layer dark overlay so text pops ── */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to bottom, rgba(8,8,8,0.3) 0%, rgba(8,8,8,0.55) 50%, rgba(8,8,8,0.85) 100%)',
+        pointerEvents: 'none',
+      }} />
+      {/* Vignette edges */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'radial-gradient(ellipse at center, transparent 40%, rgba(8,8,8,0.7) 100%)',
+        pointerEvents: 'none',
+      }} />
 
-          <motion.div custom={2} variants={fadeUp} initial="hidden" animate="visible">
-            <div className="gold-divider" style={{ marginBottom: '1.5rem' }} />
-            <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.52)', lineHeight: 1.8, maxWidth: '400px', marginBottom: '2.5rem', fontWeight: 300 }}>
-              Sakari — to be at one's best. Fresh rolls, premium fish, craft cocktails, and a lounge built for the moment.
-            </p>
-          </motion.div>
+      {/* ── Gold glow accent ── */}
+      <div style={{ position: 'absolute', bottom: '-10%', left: '50%', transform: 'translateX(-50%)', width: '60vw', height: '40vh', background: 'radial-gradient(ellipse, rgba(200,134,10,0.12) 0%, transparent 70%)', pointerEvents: 'none', filter: 'blur(40px)' }} />
 
-          <motion.div custom={3} variants={fadeUp} initial="hidden" animate="visible" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-            <a href="https://www.yelp.com/biz/sakari-sushi-lounge-des-moines" target="_blank" rel="noopener noreferrer" className="btn-gold">Order Online ↗</a>
-            <a href="#menu" className="btn-outline">Explore Menu</a>
-          </motion.div>
+      {/* ── Centered content ── */}
+      <motion.div
+        style={{ y: yContent, opacity, position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 2rem', maxWidth: '900px' }}
+      >
+        <motion.p
+          className="section-label"
+          custom={0} variants={fadeUp} initial="hidden" animate="visible"
+          style={{ marginBottom: '1.5rem', opacity: 0.8 }}
+        >
+          Des Moines, Iowa · Est. 2005
+        </motion.p>
 
-          {/* Stats strip */}
-          <motion.div custom={4} variants={fadeUp} initial="hidden" animate="visible"
-            style={{ display: 'flex', gap: '2.5rem', marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.07)', flexWrap: 'wrap' }}
-          >
-            {STATS.map(s => (
-              <div key={s.label}>
-                <p style={{ fontFamily: '"Space Grotesk",system-ui', fontSize: '1.75rem', fontWeight: 700, color: '#C8860A', lineHeight: 1 }}>{s.value}{s.suffix}</p>
-                <p style={{ fontFamily: '"JetBrains Mono",monospace', fontSize: '0.6rem', color: 'rgba(255,255,255,0.38)', letterSpacing: '0.12em', marginTop: '0.3rem', textTransform: 'uppercase' }}>{s.label}</p>
-              </div>
-            ))}
-          </motion.div>
+        <motion.h1
+          custom={1} variants={fadeUp} initial="hidden" animate="visible"
+          style={{
+            fontFamily: '"Space Grotesk",system-ui',
+            fontSize: 'clamp(3.5rem,9vw,8.5rem)',
+            fontWeight: 700,
+            lineHeight: 0.95,
+            letterSpacing: '-0.02em',
+            color: '#fff',
+            marginBottom: '1.5rem',
+            textShadow: '0 4px 40px rgba(0,0,0,0.5)',
+          }}
+        >
+          AT THE<br />
+          <span style={{ fontFamily: '"Cormorant Garamond",serif', fontStyle: 'italic', fontWeight: 300, fontSize: '1.05em', color: '#F2C96D' }}>
+            Peak
+          </span>
+          <br />OF CRAFT.
+        </motion.h1>
+
+        <motion.p
+          custom={2} variants={fadeUp} initial="hidden" animate="visible"
+          style={{ fontSize: 'clamp(0.95rem,1.5vw,1.1rem)', color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, maxWidth: '500px', margin: '0 auto 2.5rem', fontWeight: 300 }}
+        >
+          Sakari — to be at one's best. Fresh rolls, premium fish, craft cocktails, and a lounge built for the moment.
+        </motion.p>
+
+        <motion.div
+          custom={3} variants={fadeUp} initial="hidden" animate="visible"
+          style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}
+        >
+          <a href="https://www.yelp.com/biz/sakari-sushi-lounge-des-moines" target="_blank" rel="noopener noreferrer" className="btn-gold">
+            Order Online ↗
+          </a>
+          <a href="#menu" className="btn-outline">Explore Menu</a>
         </motion.div>
 
-        {/* Image stack — midground layer + 3D tilt (GT Media interactive mockups) */}
-        <motion.div style={{ y: yMid }} className="preserve-3d">
-          <TiltCard style={{ position: 'relative', height: '580px' }}>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94, rotateY: -8 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ duration: 0.9, ease: EASE_OUT_QUART, delay: 0.4 }}
-              style={{ position: 'absolute', top: 0, right: 0, width: '85%', height: '72%', borderRadius: '20px', overflow: 'hidden', border: '1px solid rgba(200,134,10,0.14)' }}
-            >
-              <img src="/assets/sushi-explosion.png" alt="Signature sushi roll" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              {/* GT Media: dynamic lighting overlay */}
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(200,134,10,0.08) 0%, transparent 60%)' }} />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              transition={{ duration: 0.8, ease: EASE_OUT_QUART, delay: 0.6 }}
-              style={{ position: 'absolute', bottom: 0, left: 0, width: '55%', height: '44%', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(200,134,10,0.18)', boxShadow: '0 28px 70px rgba(0,0,0,0.7)' }}
-            >
-              <img src="/assets/cocktail.png" alt="Craft cocktail" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </motion.div>
-
-            {/* Floating badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ ...EASE_SPRING, delay: 0.8 }}
-              className="glass-gold"
-              style={{ position: 'absolute', top: '46%', left: '-6%', padding: '0.8rem 1.25rem', zIndex: 10 }}
-            >
-              <p className="section-label" style={{ marginBottom: '0.25rem', fontSize: '0.5rem' }}>Yelp Rating</p>
-              <p style={{ fontFamily: '"Cormorant Garamond",serif', fontSize: '1.5rem', color: '#fff', fontWeight: 400 }}>★★★★★</p>
-            </motion.div>
-          </TiltCard>
+        {/* Stats strip */}
+        <motion.div
+          custom={4} variants={fadeUp} initial="hidden" animate="visible"
+          style={{ display: 'flex', gap: '3rem', justifyContent: 'center', marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)', flexWrap: 'wrap' }}
+        >
+          {STATS.map(s => (
+            <div key={s.label} style={{ textAlign: 'center' }}>
+              <p style={{ fontFamily: '"Space Grotesk",system-ui', fontSize: '2rem', fontWeight: 700, color: '#F2C96D', lineHeight: 1 }}>
+                {s.value}{s.suffix}
+              </p>
+              <p style={{ fontFamily: '"JetBrains Mono",monospace', fontSize: '0.58rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.14em', marginTop: '0.3rem', textTransform: 'uppercase' }}>
+                {s.label}
+              </p>
+            </div>
+          ))}
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Scroll hint */}
-      <motion.div style={{ opacity }} className="absolute bottom-10 left-1/2" style2={{ position: 'absolute', bottom: '2.5rem', left: '50%', transform: 'translateX(-50%)', textAlign: 'center', zIndex: 2 }}>
+      <motion.div
+        style={{ opacity, position: 'absolute', bottom: '2.5rem', left: '50%', transform: 'translateX(-50%)', textAlign: 'center', zIndex: 3 }}
+      >
         <p className="section-label" style={{ opacity: 0.4, marginBottom: '0.5rem', fontSize: '0.55rem' }}>Scroll</p>
         <motion.div
           animate={{ scaleY: [1, 0.4, 1] }}
