@@ -1,0 +1,276 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gold: #C8860A;
+  --gold-light: #F2C96D;
+  --ink: #080808;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #080808;
+  color: #ffffff;
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Custom cursor */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background: #C8860A;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(200, 134, 10, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+}
+
+.cursor.hover { width: 20px; height: 20px; background: #F2C96D; }
+.cursor-follower.hover { width: 60px; height: 60px; border-color: rgba(242,201,109,0.5); }
+
+/* Scroll progress */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #C8860A, #F2C96D);
+  z-index: 1000;
+  transform-origin: left;
+  transform: scaleX(0);
+  width: 100%;
+}
+
+/* Preloader */
+.preloader {
+  position: fixed;
+  inset: 0;
+  background: #080808;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+.preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 800;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 1.5rem 2.5rem;
+}
+.navbar.pill {
+  top: 1rem;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  max-width: 900px;
+  width: calc(100% - 2rem);
+  padding: 0.75rem 1.75rem;
+  border-radius: 100px;
+  background: rgba(8, 8, 8, 0.88);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(200, 134, 10, 0.18);
+}
+
+/* Glass card */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+}
+.glass-gold {
+  background: rgba(200, 134, 10, 0.06);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(200, 134, 10, 0.2);
+  border-radius: 20px;
+}
+
+/* Scroll animation */
+.scroll-section { position: relative; }
+.scroll-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Annotation cards */
+.annotation-card {
+  position: absolute;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+.annotation-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stars */
+#starscape {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.45;
+}
+
+/* Reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.9s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.9s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+/* Buttons */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #C8860A;
+  color: #080808;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.875rem 2rem;
+  border-radius: 100px;
+  border: none;
+  cursor: none;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+.btn-gold:hover {
+  background: #F2C96D;
+  box-shadow: 0 0 32px rgba(200, 134, 10, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: #C8860A;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.875rem 2rem;
+  border-radius: 100px;
+  border: 1px solid rgba(200, 134, 10, 0.35);
+  cursor: none;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+.btn-outline:hover {
+  border-color: #C8860A;
+  background: rgba(200, 134, 10, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Labels */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C8860A;
+  margin-bottom: 1rem;
+}
+
+.gold-divider {
+  width: 56px;
+  height: 1px;
+  background: linear-gradient(90deg, #C8860A, transparent);
+  margin: 1.25rem 0;
+}
+
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 20s linear infinite;
+}
+
+/* Testimonial card hover */
+.testimonial-card {
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(200, 134, 10, 0.3) !important;
+}
+
+/* Feature card hover */
+.feature-card {
+  transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+}
+.feature-card:hover {
+  transform: translateY(-6px);
+  background: rgba(200, 134, 10, 0.07);
+  border-color: rgba(200, 134, 10, 0.25);
+}
+
+@media (max-width: 768px) {
+  body { cursor: auto; }
+  .cursor, .cursor-follower { display: none; }
+  .nav-links { display: none !important; }
+  .navbar { padding: 1rem 1.25rem; }
+  .navbar.pill { padding: 0.6rem 1.25rem; }
+}
