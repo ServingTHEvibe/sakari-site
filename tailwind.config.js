@@ -3,42 +3,22 @@ export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
+      // Marcelo 80/10/10 palette
       colors: {
-        gold: {
-          DEFAULT: '#C8860A',
-          light: '#F2C96D',
-          dim: '#8B5E06',
-        },
-        ink: {
-          DEFAULT: '#080808',
-          soft: '#111111',
-          card: '#161616',
-        },
+        gold: { DEFAULT: '#C8860A', light: '#F2C96D', dim: '#6B4705' },
+        ink: { DEFAULT: '#080808', soft: '#101010', card: '#141414', border: '#1E1E1E' },
       },
       fontFamily: {
+        // TDS / Marcelo bold geometric heading
+        display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        // Editorial italic accents (Anton Skvortsov luxury feel)
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        // Body
         sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
-      animation: {
-        'fade-up': 'fadeUp 0.8s ease forwards',
-        'fade-in': 'fadeIn 0.6s ease forwards',
-        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
-      },
-      keyframes: {
-        fadeUp: {
-          '0%': { opacity: '0', transform: 'translateY(30px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        pulseGlow: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(200, 134, 10, 0.3)' },
-          '50%': { boxShadow: '0 0 40px rgba(200, 134, 10, 0.6)' },
-        },
-      },
+      // GT Media / TDS perspective containers
+      perspective: { '1000': '1000px', '1500': '1500px' },
     },
   },
   plugins: [],
