@@ -274,6 +274,80 @@ body {
   pointer-events: none; border-radius: inherit;
 }
 
+/* ── V2 Keyframe Animations ────────────────────────────────────── */
+
+/* Gold/red light sweep across buttons */
+@keyframes shimmer {
+  0%   { transform: translateX(-180%) skewX(-15deg); }
+  100% { transform: translateX(400%) skewX(-15deg); }
+}
+
+/* Background glow drifts slowly */
+@keyframes glow-drift {
+  0%, 100% { transform: translate(-50%,-50%) scale(1);   opacity: 0.1; }
+  33%       { transform: translate(-48%,-53%) scale(1.08); opacity: 0.16; }
+  66%       { transform: translate(-52%,-47%) scale(0.96); opacity: 0.12; }
+}
+
+/* Sauce droplet float */
+@keyframes float-up {
+  0%   { transform: translateY(0)   scale(1);    opacity: 0; }
+  15%  { opacity: 0.6; }
+  85%  { opacity: 0.3; }
+  100% { transform: translateY(-120px) scale(0.6); opacity: 0; }
+}
+
+/* Steam wisps */
+@keyframes steam {
+  0%   { transform: translateY(0) scaleX(1)   rotate(0deg);   opacity: 0; }
+  20%  { opacity: 0.12; }
+  80%  { opacity: 0.06; }
+  100% { transform: translateY(-80px) scaleX(1.6) rotate(8deg); opacity: 0; }
+}
+
+/* Infinite marquee (gallery) */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Slow rotate for hero sushi */
+@keyframes slow-rotate {
+  0%   { transform: rotate(-4deg) scale(1); }
+  50%  { transform: rotate(4deg)  scale(1.03); }
+  100% { transform: rotate(-4deg) scale(1); }
+}
+
+/* V2 button with shimmer */
+.btn-red, .btn-v2 {
+  position: relative; overflow: hidden;
+}
+.btn-red::after, .btn-v2::after {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 60px; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  animation: shimmer 3s infinite;
+  animation-delay: 1.5s;
+}
+
+/* V2 card hover — slow and confident */
+.card-v2 {
+  transition: transform 0.5s cubic-bezier(0.25,0.8,0.25,1),
+              box-shadow 0.5s cubic-bezier(0.25,0.8,0.25,1),
+              border-color 0.4s ease;
+}
+.card-v2:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 40px rgba(196,18,48,0.1);
+  border-color: rgba(196,18,48,0.3) !important;
+}
+
+/* Cursor glow ring on hover */
+.cursor-follower.hover {
+  box-shadow: 0 0 20px rgba(196,18,48,0.35), 0 0 40px rgba(196,18,48,0.1);
+}
+
 @media (max-width: 768px) {
   body { cursor: auto; }
   .cursor, .cursor-follower { display: none; }
