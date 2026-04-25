@@ -39,7 +39,7 @@ export const MenuBar = React.forwardRef(
         className={cn('p-2 rounded-2xl backdrop-blur-lg relative overflow-hidden', className)}
         style={{
           background: 'rgba(8,8,8,0.88)',
-          border: '1px solid rgba(200,134,10,0.18)',
+          border: '1px solid rgba(196,18,48,0.22)',
           boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
         }}
         initial="initial"
@@ -50,7 +50,7 @@ export const MenuBar = React.forwardRef(
         <motion.div
           style={{
             position: 'absolute', inset: '-8px',
-            background: 'radial-gradient(ellipse at center, rgba(200,134,10,0.12) 0%, rgba(200,134,10,0.06) 40%, transparent 70%)',
+            background: 'radial-gradient(ellipse at center, rgba(196,18,48,0.12) 0%, rgba(196,18,48,0.06) 40%, transparent 70%)',
             borderRadius: '24px', zIndex: 0, pointerEvents: 'none',
           }}
           variants={navGlowVariants}
@@ -113,7 +113,7 @@ export const MenuBar = React.forwardRef(
                         rotateX: 90,
                         fontFamily: '"Space Grotesk",system-ui',
                         fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase',
-                        color: '#C8860A',
+                        color: '#C41230',
                         whiteSpace: 'nowrap',
                       }}
                       variants={backVariants}

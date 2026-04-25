@@ -4,13 +4,16 @@
 
 /* ── Marcelo Design X: 80/10/10 base ──────────────────────────── */
 :root {
-  --gold: #C8860A;
+  --red: #C41230;          /* Sakari brand red — from "SUSHI LOUNGE" wordmark */
+  --red-light: #E8203E;
+  --red-glow: rgba(196,18,48,0.18);
+  --gold: #C8860A;         /* warm premium secondary */
   --gold-light: #F2C96D;
   --ink: #080808;
   --ink-card: #141414;
-  --radius-card: 20px;       /* Marcelo: 20px+ rounded corners */
-  --ease-out-quart: cubic-bezier(0.25, 0.8, 0.25, 1);      /* Anton Skvortsov signature */
-  --ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);   /* subtle overshoot on hover */
+  --radius-card: 20px;
+  --ease-out-quart: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   --duration-std: 400ms;
   --duration-slow: 650ms;
 }
@@ -32,7 +35,7 @@ body {
 .cursor {
   position: fixed;
   width: 10px; height: 10px;
-  background: var(--gold);
+  background: var(--red);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
@@ -41,12 +44,12 @@ body {
               height var(--duration-std) var(--ease-out-quart),
               background var(--duration-std) ease;
 }
-.cursor.hover { width: 18px; height: 18px; background: var(--gold-light); }
+.cursor.hover { width: 18px; height: 18px; background: var(--red-light); }
 
 .cursor-follower {
   position: fixed;
   width: 38px; height: 38px;
-  border: 1px solid rgba(200,134,10,0.35);
+  border: 1px solid rgba(196,18,48,0.4);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
@@ -55,7 +58,7 @@ body {
               height var(--duration-slow) var(--ease-out-quart),
               border-color var(--duration-std) ease;
 }
-.cursor-follower.hover { width: 56px; height: 56px; border-color: rgba(242,201,109,0.45); }
+.cursor-follower.hover { width: 56px; height: 56px; border-color: rgba(232,32,62,0.5); }
 
 /* ── Scroll progress ───────────────────────────────────────────── */
 .scroll-progress {
@@ -113,6 +116,13 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(200,134,10,0.18);
+  border-radius: var(--radius-card);
+}
+.glass-red {
+  background: rgba(196,18,48,0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(196,18,48,0.2);
   border-radius: var(--radius-card);
 }
 
@@ -178,6 +188,30 @@ body {
   transform: translateY(-2px);
 }
 
+.btn-red {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--red);
+  color: #fff;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.875rem 1.875rem;
+  border-radius: 100px;
+  border: none;
+  cursor: none;
+  text-decoration: none;
+  transition: background var(--duration-std) ease,
+              box-shadow var(--duration-std) ease,
+              transform 0.2s var(--ease-spring);
+}
+.btn-red:hover {
+  background: var(--red-light);
+  box-shadow: 0 0 36px rgba(196,18,48,0.5);
+  transform: translateY(-2px);
+}
+
 .btn-outline {
   display: inline-flex; align-items: center; gap: 0.5rem;
   background: transparent;
@@ -208,11 +242,11 @@ body {
   font-size: 0.63rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--red);
 }
 .gold-divider {
   width: 52px; height: 1px;
-  background: linear-gradient(90deg, var(--gold), transparent);
+  background: linear-gradient(90deg, var(--red), transparent);
 }
 
 /* ── Feature & testimonial card hover (GT Media cinematic) ─────── */
