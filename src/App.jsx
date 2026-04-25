@@ -312,7 +312,9 @@ function Preloader({ onDone }) {
       {!done && (
         <motion.div className="preloader" exit={{ opacity: 0 }} transition={{ duration: 0.7, ease: EASE_OUT_QUART }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} style={{ textAlign: 'center' }}>
-            <img src="/assets/logo.png" alt="Sakari" style={{ height: '48px', marginBottom: '1.25rem', filter: 'invert(1)' }} />
+            <div style={{ background: 'rgba(255,255,255,0.92)', borderRadius: '12px', padding: '6px 16px', display: 'inline-block', marginBottom: '1.25rem', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
+              <img src="/assets/logo_scroll.png" alt="Sakari" style={{ height: '44px', objectFit: 'contain', display: 'block' }} />
+            </div>
             <h1 style={{ fontFamily: '"Space Grotesk",system-ui', fontSize: 'clamp(2.5rem,6vw,5.5rem)', fontWeight: 700, letterSpacing: '0.22em', color: '#fff', lineHeight: 1 }}>
               SAKARI
             </h1>
@@ -356,8 +358,19 @@ function Navbar() {
   }
 
   const Logo = () => (
-    <a href="#hero" style={{ textDecoration: 'none', flexShrink: 0 }}>
-      <img src="/assets/logo_scroll.png" alt="Sakari Sushi Lounge" style={{ height: scrolled ? '36px' : '42px', objectFit: 'contain', transition: 'height 0.4s ease' }} />
+    <a href="#hero" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'center' }}>
+      {/* White pill container so the black/white logo reads on dark bg */}
+      <div style={{
+        background: 'rgba(255,255,255,0.92)',
+        borderRadius: '10px',
+        padding: scrolled ? '4px 12px' : '5px 14px',
+        transition: 'padding 0.4s ease',
+        display: 'inline-flex', alignItems: 'center',
+        boxShadow: '0 2px 12px rgba(0,0,0,0.25)',
+      }}>
+        <img src="/assets/logo_scroll.png" alt="Sakari Sushi Lounge"
+          style={{ height: scrolled ? '30px' : '36px', objectFit: 'contain', display: 'block', transition: 'height 0.4s ease' }} />
+      </div>
     </a>
   )
 
@@ -584,15 +597,16 @@ function About() {
           >
             <img src="/assets/food_ai_01.png" alt="Signature rolls" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </motion.div>
-          {/* Crimson glow badge */}
+          {/* Logo badge over image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_OUT_QUART, delay: 0.45 }}
-            style={{ position: 'absolute', bottom: '3rem', right: '1rem', background: `rgba(8,8,8,0.9)`, backdropFilter: 'blur(16px)', border: `1px solid rgba(196,18,48,0.3)`, borderRadius: '16px', padding: '1rem 1.25rem', zIndex: 3 }}
+            style={{ position: 'absolute', bottom: '3rem', right: '1rem', zIndex: 3 }}
           >
-            <p style={{ fontFamily: '"JetBrains Mono",monospace', fontSize: '0.58rem', color: RED, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Est. 2005</p>
-            <p style={{ fontFamily: '"Space Grotesk",system-ui', fontSize: '0.875rem', fontWeight: 700, color: '#fff' }}>2605 Ingersoll Ave</p>
-            <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)' }}>Des Moines, Iowa</p>
+            <div style={{ background: 'rgba(255,255,255,0.96)', borderRadius: '16px', padding: '0.85rem 1.25rem', boxShadow: '0 8px 32px rgba(0,0,0,0.4)', backdropFilter: 'blur(8px)' }}>
+              <img src="/assets/logo_scroll.png" alt="Sakari Sushi Lounge" style={{ height: '36px', objectFit: 'contain', display: 'block' }} />
+              <p style={{ fontFamily: '"JetBrains Mono",monospace', fontSize: '0.55rem', color: '#999', letterSpacing: '0.1em', textAlign: 'center', marginTop: '0.35rem' }}>Est. 2005 · Des Moines, IA</p>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -1083,7 +1097,9 @@ function Footer() {
       <div style={{ maxWidth: '1300px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: '3rem', alignItems: 'start', marginBottom: '3rem', flexWrap: 'wrap' }}>
           <div>
-            <img src="/assets/logo_scroll.png" alt="Sakari Sushi Lounge" style={{ height: '48px', objectFit: 'contain', marginBottom: '1rem' }} />
+            <div style={{ background: 'rgba(255,255,255,0.90)', borderRadius: '12px', padding: '6px 16px', display: 'inline-block', marginBottom: '1rem' }}>
+            <img src="/assets/logo_scroll.png" alt="Sakari Sushi Lounge" style={{ height: '40px', objectFit: 'contain', display: 'block' }} />
+          </div>
             <p style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.35)', lineHeight: 1.65, maxWidth: '210px' }}>Summit-level Japanese cuisine.<br />2605 Ingersoll Ave, Des Moines IA.</p>
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem', flexWrap: 'wrap' }}>
               {[
