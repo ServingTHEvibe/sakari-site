@@ -1154,10 +1154,10 @@ export default function App() {
           <Navbar />
           <main style={{ position: 'relative', zIndex: 1 }}>
             <Hero />
+            <ImageTickerGallery />
             <About />
             <ScrollVideo />
             <MenuSection />
-            <ImageTickerGallery />
             <Specials />
             <Events />
             <Testimonials />
