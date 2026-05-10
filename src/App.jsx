@@ -7,6 +7,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SushiStackScroll } from './components/ui/stack-card'
 import { MenuBar } from './components/ui/glow-menu'
+import { ImageTickerGallery } from './components/ui/image-ticker'
 import {
   UtensilsCrossed, CalendarDays, MapPin, PhoneCall,
   Star, PartyPopper, ChefHat, Wine, Clock,
@@ -769,47 +770,6 @@ function MenuSection() {
   )
 }
 
-// ── Gallery ────────────────────────────────────────────────────────────────────
-function Gallery() {
-  const ref = useRef(null)
-  const x = useMotionValue(0)
-  const [isHovered, setIsHovered] = useState(null)
-  const CARD_W = 360, GAP = 16, PADDING = 48
-  const totalWidth = GALLERY_IMAGES.length * (CARD_W + GAP) - GAP + PADDING * 2
-
-  return (
-    <section style={{ padding: '6rem 0', position: 'relative', zIndex: 1, overflow: 'hidden' }}>
-      <div style={{ maxWidth: '1300px', margin: '0 auto', paddingLeft: '2.5rem', marginBottom: '2.5rem' }}>
-        <SectionHeading label="Gallery" headline="The Look of" accent="Sakari" accentColor={GOLD} />
-      </div>
-      <p style={{ fontFamily: '"JetBrains Mono",monospace', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', textAlign: 'center', marginBottom: '1.5rem' }}>Drag to explore</p>
-      <motion.div ref={ref}
-        drag="x"
-        dragConstraints={{ right: 0, left: -(totalWidth - innerWidth) }}
-        dragElastic={0.08}
-        style={{ x, display: 'flex', gap: `${GAP}px`, paddingLeft: `${PADDING}px`, paddingRight: `${PADDING}px`, cursor: 'grab', width: 'max-content' }}
-        whileDrag={{ cursor: 'grabbing' }}
-      >
-        {GALLERY_IMAGES.map((img, i) => (
-          <motion.div key={i}
-            onHoverStart={() => setIsHovered(i)} onHoverEnd={() => setIsHovered(null)}
-            style={{ width: `${CARD_W}px`, height: '460px', borderRadius: '20px', overflow: 'hidden', position: 'relative', flexShrink: 0, border: `1px solid ${isHovered === i ? `rgba(196,18,48,0.4)` : 'rgba(255,255,255,0.06)'}`, transition: 'border-color 0.3s ease' }}
-            whileHover={{ scale: 1.02 }} transition={{ duration: 0.3, ease: EASE_OUT_QUART }}
-          >
-            <img src={img.src} alt={img.caption} style={{ width: '100%', height: '100%', objectFit: 'cover', scale: isHovered === i ? 1.05 : 1, transition: 'scale 0.5s ease' }} draggable={false} />
-            <motion.div
-              initial={{ opacity: 0, y: 10 }} animate={{ opacity: isHovered === i ? 1 : 0, y: isHovered === i ? 0 : 10 }}
-              transition={{ duration: 0.25 }}
-              style={{ position: 'absolute', bottom: '1rem', left: '50%', transform: 'translateX(-50%)', background: 'rgba(8,8,8,0.85)', backdropFilter: 'blur(12px)', borderRadius: '100px', padding: '0.4rem 1rem', border: `1px solid rgba(196,18,48,0.3)` }}
-            >
-              <p style={{ fontFamily: '"JetBrains Mono",monospace', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#fff', whiteSpace: 'nowrap' }}>{img.caption}</p>
-            </motion.div>
-          </motion.div>
-        ))}
-      </motion.div>
-    </section>
-  )
-}
 
 // ── Specials ───────────────────────────────────────────────────────────────────
 function Specials() {
@@ -1197,7 +1157,7 @@ export default function App() {
             <About />
             <ScrollVideo />
             <MenuSection />
-            <Gallery />
+            <ImageTickerGallery />
             <Specials />
             <Events />
             <Testimonials />
