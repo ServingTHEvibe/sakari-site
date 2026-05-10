@@ -274,10 +274,22 @@ body {
   pointer-events: none; border-radius: inherit;
 }
 
+/* ── Hamburger (hidden on desktop, shown on mobile) ────────────── */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.4rem;
+  line-height: 1;
+}
+
 @media (max-width: 768px) {
   body { cursor: auto; }
   .cursor, .cursor-follower { display: none; }
   .nav-links { display: none !important; }
   .navbar { padding: 1rem 1.25rem; }
   .navbar.pill { padding: 0.65rem 1.25rem; }
+  .hamburger-btn { display: flex; align-items: center; justify-content: center; }
 }

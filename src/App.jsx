@@ -188,10 +188,11 @@ const STATS = [
 const GALLERY_IMAGES = [
   { src: '/assets/slide1.jpg',       caption: 'The Experience'   },
   { src: '/assets/food_ai_01.png',   caption: 'Signature Rolls'  },
-  { src: '/assets/slide2.jpg',       caption: 'Craft Cocktails'  },
-  { src: '/assets/sushi_hero_01.png',caption: 'Made Fresh Daily' },
+  { src: '/assets/slide2.jpg',       caption: 'Private Dining'   },
+  { src: '/assets/sushi_hero_01.png',caption: 'Craft Cocktails'  },
   { src: '/assets/food_00.jpg',      caption: 'Chef Signatures'  },
   { src: '/assets/slide3.jpg',       caption: 'The Lounge'       },
+  { src: '/assets/food_02.jpg',      caption: 'Tuna Tataki'      },
   { src: '/assets/food_ai_02.png',   caption: 'Premium Fish'     },
   { src: '/assets/sushi_hero_02.png',caption: 'The Detail'       },
   { src: '/assets/food_01.jpg',      caption: 'Sashimi Bar'      },
@@ -389,7 +390,7 @@ function Navbar() {
             <MenuBar items={NAV_ITEMS} activeItem={activeItem} onItemClick={handleNavClick}
               style={{ border: 'none', background: 'transparent', boxShadow: 'none', backdropFilter: 'none', padding: '0' }} />
           </div>
-          <button onClick={() => setMobileOpen(o => !o)} style={{ display: 'none', background: 'none', border: 'none', color: '#fff', fontSize: '1.1rem', cursor: 'pointer' }}>
+          <button onClick={() => setMobileOpen(o => !o)} className="hamburger-btn" style={{ fontSize: '1.1rem' }}>
             {mobileOpen ? '✕' : '☰'}
           </button>
         </motion.div>
@@ -399,7 +400,7 @@ function Navbar() {
           <div className="nav-links">
             <MenuBar items={NAV_ITEMS} activeItem={activeItem} onItemClick={handleNavClick} />
           </div>
-          <button onClick={() => setMobileOpen(o => !o)} style={{ display: 'none', background: 'none', border: 'none', color: '#fff', fontSize: '1.2rem', cursor: 'pointer' }}>
+          <button onClick={() => setMobileOpen(o => !o)} className="hamburger-btn" style={{ fontSize: '1.2rem' }}>
             {mobileOpen ? '✕' : '☰'}
           </button>
         </>
@@ -1044,6 +1045,20 @@ function Location() {
             <div style={{ marginTop: '1.25rem', padding: '0.9rem 1rem', background: `rgba(196,18,48,0.07)`, borderRadius: '12px', border: `1px solid rgba(196,18,48,0.18)` }}>
               <p className="section-label" style={{ marginBottom: '0.3rem', color: RED }}>Friday Happy Hour · 2–5PM</p>
               <p style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.52)' }}>House rolls $3.50 · Kirin Draft $3.50 · Sake Bombs $7 · Martinis $6</p>
+            </div>
+
+            {/* Map */}
+            <div style={{ marginTop: '1.5rem', borderRadius: '20px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.07)', aspectRatio: '16/9' }}>
+              <iframe
+                title="Sakari Sushi Lounge location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2977.56!2d-93.6509!3d41.5853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87ee990a3f5fffff%3A0x1!2s2605+Ingersoll+Ave%2C+Des+Moines%2C+IA+50312!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) saturate(0.6) brightness(0.85)', display: 'block' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
           </div>
         </motion.div>
