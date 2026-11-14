@@ -6,11 +6,12 @@ export default {
       // Marcelo 80/10/10 palette
       colors: {
         gold: { DEFAULT: '#C8860A', light: '#F2C96D', dim: '#6B4705' },
-        ink: { DEFAULT: '#080808', soft: '#101010', card: '#141414', border: '#1E1E1E' },
+        ink: { DEFAULT: '#14100e', soft: '#101010', card: '#141414', border: '#1E1E1E' },
       },
       fontFamily: {
         // TDS / Marcelo bold geometric heading
-        display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        jp: ['"Noto Serif JP"', 'serif'],
         // Editorial italic accents (Anton Skvortsov luxury feel)
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         // Body

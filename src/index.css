@@ -2,294 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Marcelo Design X: 80/10/10 base ──────────────────────────── */
-:root {
-  --red: #C41230;          /* Sakari brand red — from "SUSHI LOUNGE" wordmark */
-  --red-light: #E8203E;
-  --red-glow: rgba(196,18,48,0.18);
-  --gold: #C8860A;         /* warm premium secondary */
-  --gold-light: #F2C96D;
-  --ink: #080808;
-  --ink-card: #141414;
-  --radius-card: 20px;
-  --ease-out-quart: cubic-bezier(0.25, 0.8, 0.25, 1);
-  --ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  --duration-std: 400ms;
-  --duration-slow: 650ms;
+html { scroll-behavior: smooth; background: #0b0908; }
+body { font-family: Inter, system-ui, sans-serif; overflow-x: hidden; }
+::selection { background: #c41230; color: #fff; }
+.font-jp { font-family: "Noto Serif JP", serif; }
+
+@layer components {
+  .wrap { @apply w-full max-w-[1320px] mx-auto px-5 md:px-8; }
+  .h2 { @apply font-display text-white text-5xl md:text-7xl leading-[0.95] tracking-tight; }
+  .body { @apply text-white/65 text-lg leading-relaxed; }
+  .eyebrow { @apply inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-white/55; }
+  .eyebrow-dot { @apply w-6 h-px bg-[#c41230]; }
+  .navlink { @apply relative text-[13px] tracking-[0.12em] uppercase text-white/70 hover:text-white transition; }
+  .navlink::after { content: ''; @apply absolute left-0 -bottom-1 h-px w-0 bg-[#c41230] transition-all duration-300; }
+  .navlink:hover::after { @apply w-full; }
+  .btn-primary { @apply inline-flex items-center gap-2 bg-[#c41230] hover:bg-[#a50e27] text-white text-[13px] tracking-[0.1em] uppercase px-6 py-3.5 rounded-full transition-all duration-300 hover:gap-3; }
+  .btn-ghost { @apply inline-flex items-center gap-2 border border-white/25 hover:border-white hover:bg-white hover:text-black text-white text-[13px] tracking-[0.1em] uppercase px-6 py-3.5 rounded-full transition-all duration-300; }
+  .btn-dark { @apply inline-flex items-center gap-2 bg-ink hover:bg-[#c41230] text-white text-[13px] tracking-[0.1em] uppercase px-6 py-3.5 rounded-full transition-all duration-300; }
+  .btn-dark-ghost { @apply inline-flex items-center gap-2 border border-ink/20 hover:border-ink text-ink text-[13px] tracking-[0.1em] uppercase px-6 py-3.5 rounded-full transition-all duration-300; }
+  .icon-btn { @apply w-11 h-11 rounded-full border border-white/15 hover:border-white/50 bg-black/20 backdrop-blur grid place-items-center text-white transition; }
+  .field { @apply mt-2 w-full bg-transparent border-b border-white/15 focus:border-[#c41230] outline-none py-2.5 text-white transition [color-scheme:dark]; }
+  .field option { @apply bg-[#0b0908]; }
+  .field-light { @apply mt-2 w-full bg-transparent border-b border-ink/15 focus:border-[#c41230] outline-none py-2.5 text-ink transition; }
+  .img-frame { box-shadow: 0 40px 80px -30px rgba(0,0,0,.8); }
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--ink);
-  color: #ffffff;
-  font-family: 'Inter', system-ui, sans-serif;
-  overflow-x: hidden;
-  cursor: none;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* ── Custom cursor ─────────────────────────────────────────────── */
-.cursor {
-  position: fixed;
-  width: 10px; height: 10px;
-  background: var(--red);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width var(--duration-std) var(--ease-out-quart),
-              height var(--duration-std) var(--ease-out-quart),
-              background var(--duration-std) ease;
-}
-.cursor.hover { width: 18px; height: 18px; background: var(--red-light); }
-
-.cursor-follower {
-  position: fixed;
-  width: 38px; height: 38px;
-  border: 1px solid rgba(196,18,48,0.4);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: width var(--duration-slow) var(--ease-out-quart),
-              height var(--duration-slow) var(--ease-out-quart),
-              border-color var(--duration-std) ease;
-}
-.cursor-follower.hover { width: 56px; height: 56px; border-color: rgba(232,32,62,0.5); }
-
-/* ── Scroll progress ───────────────────────────────────────────── */
-.scroll-progress {
-  position: fixed;
-  top: 0; left: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--gold), var(--gold-light));
-  z-index: 1000;
-  transform-origin: left;
-  transform: scaleX(0);
-  width: 100%;
-}
-
-/* ── Preloader ─────────────────────────────────────────────────── */
-.preloader {
-  position: fixed; inset: 0;
-  background: var(--ink);
-  z-index: 9000;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-}
-
-/* ── Navbar (21st Mini Navbar pill pattern) ────────────────────── */
-.navbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 800;
-  padding: 1.5rem 2.5rem;
-  transition: all var(--duration-slow) var(--ease-out-quart);
-}
-.navbar.pill {
-  top: 14px;
-  left: 50%; right: auto;
-  transform: translateX(-50%);
-  max-width: 920px;
-  width: calc(100% - 2rem);
-  padding: 0.7rem 1.75rem;
-  border-radius: 100px;
-  background: rgba(8,8,8,0.9);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
-  border: 1px solid rgba(200,134,10,0.16);
-}
-
-/* ── Glassmorphism cards (Marcelo 20px+ corners) ───────────────── */
-.glass {
-  background: rgba(255,255,255,0.03);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: var(--radius-card);
-}
-.glass-gold {
-  background: rgba(200,134,10,0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(200,134,10,0.18);
-  border-radius: var(--radius-card);
-}
-.glass-red {
-  background: rgba(196,18,48,0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(196,18,48,0.2);
-  border-radius: var(--radius-card);
-}
-
-/* ── TDS / GT Media: 3D perspective container ──────────────────── */
-.perspective-container {
-  perspective: 1000px;
-  perspective-origin: center center;
-}
-.preserve-3d { transform-style: preserve-3d; }
-
-/* ── Scroll animation section ──────────────────────────────────── */
-.scroll-section { position: relative; }
-.scroll-sticky {
-  position: sticky; top: 0;
-  height: 100vh; overflow: hidden;
-}
-
-/* ── Annotation cards ──────────────────────────────────────────── */
-.annotation-card {
-  position: absolute;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.5s var(--ease-out-quart),
-              transform 0.5s var(--ease-out-quart);
-  pointer-events: none;
-}
-.annotation-card.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ── Starscape ─────────────────────────────────────────────────── */
-#starscape {
-  position: fixed; top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.4;
-}
-
-/* ── Buttons ───────────────────────────────────────────────────── */
-.btn-gold {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: var(--gold);
-  color: #080808;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 0.875rem 1.875rem;
-  border-radius: 100px;
-  border: none;
-  cursor: none;
-  text-decoration: none;
-  transition: background var(--duration-std) ease,
-              box-shadow var(--duration-std) ease,
-              transform 0.2s var(--ease-spring);
-}
-.btn-gold:hover {
-  background: var(--gold-light);
-  box-shadow: 0 0 36px rgba(200,134,10,0.55);
-  transform: translateY(-2px);
-}
-
-.btn-red {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: var(--red);
-  color: #fff;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 0.875rem 1.875rem;
-  border-radius: 100px;
-  border: none;
-  cursor: none;
-  text-decoration: none;
-  transition: background var(--duration-std) ease,
-              box-shadow var(--duration-std) ease,
-              transform 0.2s var(--ease-spring);
-}
-.btn-red:hover {
-  background: var(--red-light);
-  box-shadow: 0 0 36px rgba(196,18,48,0.5);
-  transform: translateY(-2px);
-}
-
-.btn-outline {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: transparent;
-  color: var(--gold);
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 0.875rem 1.875rem;
-  border-radius: 100px;
-  border: 1px solid rgba(200,134,10,0.32);
-  cursor: none;
-  text-decoration: none;
-  transition: border-color var(--duration-std) ease,
-              background var(--duration-std) ease,
-              transform 0.2s var(--ease-spring);
-}
-.btn-outline:hover {
-  border-color: var(--gold);
-  background: rgba(200,134,10,0.07);
-  transform: translateY(-2px);
-}
-
-/* ── Labels & dividers ─────────────────────────────────────────── */
-.section-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.63rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--red);
-}
-.gold-divider {
-  width: 52px; height: 1px;
-  background: linear-gradient(90deg, var(--red), transparent);
-}
-
-/* ── Feature & testimonial card hover (GT Media cinematic) ─────── */
-.feature-card {
-  transition: transform var(--duration-std) var(--ease-out-quart),
-              border-color var(--duration-std) ease,
-              background var(--duration-std) ease;
-}
-.feature-card:hover {
-  background: rgba(200,134,10,0.06);
-  border-color: rgba(200,134,10,0.22);
-}
-
-.testimonial-card {
-  transition: transform var(--duration-std) var(--ease-out-quart),
-              border-color var(--duration-std) ease;
-}
-.testimonial-card:hover { border-color: rgba(200,134,10,0.28) !important; }
-
-/* ── Noise texture overlay (Marcelo final polish) ──────────────── */
-.noise::after {
-  content: '';
-  position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none; border-radius: inherit;
-}
-
-/* ── Hamburger (hidden on desktop, shown on mobile) ────────────── */
-.hamburger-btn {
-  display: none;
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  padding: 0.4rem;
-  line-height: 1;
-}
-
-@media (max-width: 768px) {
-  body { cursor: auto; }
-  .cursor, .cursor-follower { display: none; }
-  .nav-links { display: none !important; }
-  .navbar { padding: 1rem 1.25rem; }
-  .navbar.pill { padding: 0.65rem 1.25rem; }
-  .hamburger-btn { display: flex; align-items: center; justify-content: center; }
-}
+.marquee { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+.spin-slow svg { animation: spin 18s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+.map-dark { filter: grayscale(1) invert(.92) contrast(.9) hue-rotate(180deg); }
+body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 99; opacity: .045; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+@media (prefers-reduced-motion: reduce) { .marquee, .spin-slow svg { animation: none; } }
+@media (max-width: 767px) { footer { padding-bottom: 64px; } }
